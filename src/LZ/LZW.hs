@@ -1,7 +1,7 @@
 {- |
   Module      : LZ.LZW
   Description : An implementation of LZW method
-  Maintainer  : ???
+  Maintainer  : Weiss Anthony
 -}
 module LZ.LZW(compress, uncompress) where
 
