@@ -1,6 +1,6 @@
 # cabal build
 dist-newstyle/
-file.exe.stackdump
+*.exe.stackdump
 
 # local testing
 *.txt
