@@ -1,6 +1,9 @@
-# cabal build
+# cabal
 dist-newstyle/
 *.exe.stackdump
+
+# stack
+.stack-work/
 
 # local testing
 *.txt
