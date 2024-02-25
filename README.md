@@ -76,7 +76,7 @@ Pour construire et exécuter le projet, suivez ces étapes :
 - Marwane Lagzaoui
 - Ethan Pinto
 - Anthony Weiss
-- Nicolas Mendy ([LinkedIn](https://www.linkedin.com/in/nicolas--dubois/) [Mail](mendynicol@cy-tech.fr))
+- Nicolas Mendy ([LinkedIn](https://www.linkedin.com/in/nicolas--dubois/) - [Mail](mendynicol@cy-tech.fr))
 
 ## Licence
 
