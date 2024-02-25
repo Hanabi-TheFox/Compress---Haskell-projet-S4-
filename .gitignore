@@ -1,0 +1,7 @@
+# cabal build
+dist-newstyle/
+file.exe.stackdump
+
+# local testing
+*.txt
+*.ps1
