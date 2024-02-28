@@ -3,6 +3,7 @@ module Main (main) where
 import Statistic.Huffman
 import LZ.LZW
 import LZ.LZ78
+import RLE
 
 main :: IO ()
 main = do
@@ -44,3 +45,15 @@ main = do
   case decompressed of
     Just result -> putStrLn result
     Nothing -> putStrLn "Unable to decompress the input"
+  
+  -- Méthode RLE
+  putStrLn "\n\nMethods : RLE\n"
+  let rleInput = "oussamamarwwwanehamza"
+      rleCompressed = RLE.compress rleInput
+      rleDecompressed = RLE.uncompress rleCompressed 
+
+  putStrLn $ "Data originale: " ++ rleInput
+  putStrLn $ "Données compressées: " ++ show rleCompressed
+  case rleDecompressed of
+    Just str -> putStrLn $ "Données décompressées: " ++ str
+    Nothing -> putStrLn "Erreur lors de la décompression."
