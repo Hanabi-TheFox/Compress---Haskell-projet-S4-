@@ -6,6 +6,17 @@ import LZ.LZ78
 
 main :: IO ()
 main = do
+
+  --Méthode ShannonFano
+  putStrLn "\n\nMethode : ShannonFano\n"
+  let str = "Je vais tester mon code !"
+  let (tree,bit) = compressShannon str 
+  let uncompressedStr = uncompressShannon tree bit
+
+  putStrLn $ "Input : " ++ show str
+  putStrLn $ "Compressed Input : " ++ show bit
+  putStrLn $ "Uncompressed Input : " ++ show uncompressedStr 
+
   -- Méthode Huffman
   putStrLn "Methods : Huffman\n"
   let input = "test bola CHIPOLATA 42! [ü]"
