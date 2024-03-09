@@ -9,7 +9,7 @@ main = do
 
   --Méthode ShannonFano
   putStrLn "\n\nMethode : ShannonFano\n"
-  let str = "Je vais tester mon code !"
+  let str = "Est-ce que mon code marche ? Si affichage alors (System.out.printfln('yes') sinon throw(new callstackException()) :("
   let (tree,bit) = compressShannon str 
   let uncompressedStr = uncompressShannon tree bit
 

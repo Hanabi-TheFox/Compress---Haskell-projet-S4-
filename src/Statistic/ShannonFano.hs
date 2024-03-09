@@ -9,7 +9,9 @@ import Statistic.EncodingTree (EncodingTree(..), encode, decode)
 import Statistic.Bit (Bit)
 import Statistic.Source (occurrences)
 import Data.Map (toList)
-import Data.List (sortOn)
+import Data.List (sortOn,minimumBy)
+import Control.Arrow (ArrowChoice(left))
+import Data.Ord (comparing)
 
 
 -- | Shannon-Fano tree generation
@@ -21,23 +23,40 @@ tree input = do
     orderedCounts :: Ord a => [a] -> [(a, Int)]
     orderedCounts = sortOn snd . toList . occurrences
 
--- Helper function to build the Shannon-Fano tree recursively
 buildTree :: Ord a => [(a, Int)] -> EncodingTree a
 buildTree [(x,occ)] = EncodingLeaf occ x
 buildTree txt =  
   let
     totalOccurences = sum (map snd txt)
-    (firstHalf, secondHalf) = splitAt (length txt `div` 2) (sortOn snd txt)
+    (firstHalf, secondHalf) = splitAt (splitIndex txt) (sortOn snd txt) -- length txt `div` 2
    
   in
     EncodingNode totalOccurences (buildTree firstHalf) (buildTree secondHalf)
     
--- Helper function to find the split index in the symbol list
-findSplitIndex :: [(a, Int)] -> Int -> Int -> Int -> Int
-findSplitIndex ((_, count):rest) currentIndex currentSum targetSum
-  | currentSum + count >= targetSum = currentIndex
-  | otherwise = findSplitIndex rest (currentIndex + 1) (currentSum + count) targetSum
-findSplitIndex _ _ _ _ = error "Invalid split index calculation"
+splitIndex :: [(a, Int)] -> Int
+splitIndex txt
+  | length txt < 2 = 0 -- Making sure we use an array
+  | otherwise =
+    let
+      index = [1..length txt - 1]
+      differencesArray = map (calculateDifference txt) index
+      minIndex = findSplitIndex differencesArray
+    in
+      minIndex
+
+-- | Sums the occurences of the left part and right part given an index, then calculates the differences
+calculateDifference :: [(a, Int)] -> Int -> Int
+calculateDifference txt splitIndex =
+  let
+    (left, right) = splitAt splitIndex txt
+    leftCount = sum (map snd left)
+    rightCount = sum (map snd right)
+  in
+    abs (leftCount - rightCount)
+
+-- | Returns the index of the minimum occurences difference between two different parts of the array
+findSplitIndex :: Ord a => [a] -> Int
+findSplitIndex tab = snd (minimumBy (comparing fst) (zip tab [1..]))
 
 -- | Compress using Shannon-Fano encoding
 compressShannon :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
