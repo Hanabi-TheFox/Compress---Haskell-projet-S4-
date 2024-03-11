@@ -19,8 +19,8 @@ afficher methode input = do
       afficherResultats compressed decompressed
 
     "Huffman" -> do
-      let (encodingTree, compressed) = compressHuffman input
-          decompressed = decompressHuffman encodingTree compressed
+      let (encodingTree, compressed) = Huffman.compress input
+          decompressed = Huffman.decompress encodingTree compressed
       afficherResultats compressed decompressed
 
     "ShannonFano" -> do

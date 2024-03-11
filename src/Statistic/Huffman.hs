@@ -3,7 +3,7 @@
   Description : A module containing specifics for the Huffman compression method
   Maintainer : Nicolas Mendy (mendynicol@cy-tech.fr)
 -}
-module Statistic.Huffman (tree, compressHuffman, decompressHuffman) where
+module Statistic.Huffman (tree, compress, decompress) where
 
 import Statistic.EncodingTree ( EncodingTree(..), encode, decode )
 import Statistic.Bit ( Bit )
@@ -27,8 +27,8 @@ tree input = do
     orderedCounts = sortOn snd . toList . occurrences
 
 -- | Compress using Huffman encoding
-compressHuffman :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
-compressHuffman input =
+compress :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
+compress input =
   case tree input of
     Just encodingTree ->
       let compressedBits = concatMap (\x -> maybe [] id (encode encodingTree x)) input
@@ -36,6 +36,6 @@ compressHuffman input =
     Nothing           -> (Nothing, [])
 
 -- | Decompress using Huffman encoding
-decompressHuffman :: Maybe (EncodingTree a) -> [Bit] -> Maybe [a]
-decompressHuffman (Just encodingTree) bits = decode encodingTree bits
-decompressHuffman Nothing _              = Nothing
+decompress :: Maybe (EncodingTree a) -> [Bit] -> Maybe [a]
+decompress (Just encodingTree) bits = decode encodingTree bits
+decompress Nothing _              = Nothing
