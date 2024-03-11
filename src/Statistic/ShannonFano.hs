@@ -10,9 +10,8 @@ import Statistic.Bit (Bit)
 import Statistic.Source (occurrences)
 import Data.Map (toList)
 import Data.List (sortOn,minimumBy)
-import Control.Arrow (ArrowChoice(left))
 import Data.Ord (comparing)
-
+import Control.Arrow ()
 
 -- | Shannon-Fano tree generation
 tree :: Ord a => [a] -> Maybe (EncodingTree a)
@@ -46,9 +45,9 @@ splitIndex txt
 
 -- | Sums the occurences of the left part and right part given an index, then calculates the differences
 calculateDifference :: [(a, Int)] -> Int -> Int
-calculateDifference txt splitIndex =
+calculateDifference txt index =
   let
-    (left, right) = splitAt splitIndex txt
+    (left, right) = splitAt index txt
     leftCount = sum (map snd left)
     rightCount = sum (map snd right)
   in
