@@ -17,10 +17,13 @@ compress = compress' Map.empty 0
     compress' dict nextIndex input =
       let (prefix, suffix) = findLongestPrefix dict input
           dict' = Map.insert (prefix ++ [head suffix | not (null suffix)]) (nextIndex + 1) dict
-      in (Map.findWithDefault 0 prefix dict, case suffix of { [] -> '\0'; (x:_) -> x }) : compress' dict' (nextIndex + 1) (drop (length prefix + 1) input)
+          charAtIndex = case suffix of { [] -> '\0'; (x:_) -> x }
+      in if charAtIndex == '\0'
+        then (0, head prefix) : compress' dict' (nextIndex + 1) (drop (length prefix + 1) input)
+        else (Map.findWithDefault 0 prefix dict, charAtIndex) : compress' dict' (nextIndex + 1) (drop (length prefix + 1) input)
 
     findLongestPrefix :: Map String Int -> String -> (String, String)
-    findLongestPrefix dict input = go [] input
+    findLongestPrefix dict = go []
       where
         go prefix [] = (prefix, [])
         go prefix (x:xs) =

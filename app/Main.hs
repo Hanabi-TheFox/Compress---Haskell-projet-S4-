@@ -6,12 +6,11 @@ import Statistic.ShannonFano as ShannonFano -- Create by Marwane Laghzaoui
 import LZ.LZ78 as LZ78 -- Create by Ethan Pinto
 import LZ.LZW as LZW -- Create by Weiss Anthony
 
-
 -- Fonction pour afficher le texte compressé et décompressé selon la méthode passé en paramètre.
 afficher :: String -> String -> IO ()
 afficher methode input = do
-  putStrLn $ "\n\nMéthode : " ++ methode ++ "\n"
-  putStrLn $ "Input : " ++ input
+  putStrLn $ "\n---------------------\nMéthode : " ++ methode ++ "\n"
+  -- putStrLn $ "Input :\n\n" ++ input ++ "\n"
   case methode of
     "RLE" -> do
       let compressed = RLE.compress input
@@ -38,89 +37,64 @@ afficher methode input = do
           decompressed = LZW.uncompress compressed
       afficherResultats compressed decompressed
 
-    _ -> putStrLn $ "Méthode non reconnue : " ++ methode
+    _ -> putStrLn $ "Méthode non reconnue : " ++ methode ++ "\n"
   where
     afficherResultats :: Show a => a -> Maybe String -> IO ()
     afficherResultats compressed decompressed = do
-      putStrLn $ "Données compressées: " ++ show compressed
+      putStrLn $ "Données compressées:\n\n" ++ show compressed ++ "\n"
       case decompressed of
-        Just str -> putStrLn $ "Données décompressées: " ++ str
-        Nothing -> putStrLn "Erreur lors de la décompression."
+        Just str -> do
+          -- putStrLn $ "Données décompressées:\n\n" ++ str ++ "\n"
+          let success = str == input
+          putStrLn $ "Décompression sans perte: " ++ show success ++ "\n"
+        Nothing -> putStrLn "Erreur lors de la décompression.\n"
+      
 
 main :: IO ()
 main = do
-
-  -- -- Méthode RLE
-  -- putStrLn "\n\nMethods : RLE\n"
-  -- let rleInput = "oussamamarwwwanehamza"
-  --     rleCompressed = RLE.compress rleInput
-  --     rleDecompressed = RLE.uncompress rleCompressed 
-
-  -- putStrLn $ "Data originale: " ++ rleInput
-  -- putStrLn $ "Données compressées: " ++ show rleCompressed
-  -- case rleDecompressed of
-  --   Just str -> putStrLn $ "Données décompressées: " ++ str
-  --   Nothing -> putStrLn "Erreur lors de la décompression."
-
-  -- -- Méthode Huffman
-  -- putStrLn "Methods : Huffman\n"
-  -- let input = "test bola CHIPOLATA 42! [ü]"
-  --     (encodingTree, compressedBits) = compressHuffman input
-  --     decompressedResult = decompressHuffman encodingTree compressedBits
-
-  -- putStrLn $ "Original Input: " ++ show input
-  -- putStrLn $ "Compressed Bits: " ++ show compressedBits
-  -- putStrLn $ "Decompressed Result: " ++ show decompressedResult
-
-  -- --Méthode ShannonFano
-  -- putStrLn "\n\nMethode : ShannonFano\n"
-  -- let str = "Est-ce que mon code marche ? Si affichage alors (System.out.printfln('yes') sinon throw(new callstackException()) :("
-  -- let (tree,bit) = compressShannon str 
-  -- let uncompressedStr = uncompressShannon tree bit
-
-  -- putStrLn $ "Input : " ++ show str
-  -- putStrLn $ "Compressed Input : " ++ show bit
-  -- putStrLn $ "Uncompressed Input : " ++ show uncompressedStr
-
-   -- test for the LZ78
-  -- let inputString = "belle echelle !"
-  --     compressed = LZ78.compress inputString
-  --     decompressed = LZ78.uncompress compressed
-
-  -- putStrLn "\n\nMethods : LZ78\n"
-  -- putStrLn $ "Input String: " ++ inputString
-  -- putStrLn $ "\nCompressed Codes: " ++ show compressed
-  -- putStrLn "\nDecompressed Result:"
-  -- case decompressed of
-  --   Just result -> putStrLn result
-  --   Nothing -> putStrLn "Unable to decompress the input"
-
-  -- -- Méthode LZW
-  -- putStrLn "\n\nMethods : LZW\n"
-  -- let dataToCompress = "aaaabbcbbb"
-  -- let compressedData = LZW.compress dataToCompress
-  -- let decompressedData = LZW.uncompress compressedData
-
-  -- putStrLn $ "Data originale: " ++ dataToCompress
-  -- putStrLn $ "Données compressées: " ++ show compressedData
-  -- case decompressedData of
-  --   Just str -> putStrLn $ "Données décompressées: " ++ str
-  --   Nothing -> putStrLn "Erreur lors de la décompression."
-  
-  -----------------------------------------------------------------------
-  -----------------------------------------------------------------------
-  -----------------------------------------------------------------------
 
     -- Demonstration Compression/Decompression Efficiencies for all methods
   putStrLn "\n\nDemonstration Compression/Decompression Efficiencies for all methods\n"
 
   putStrLn "Exemples of the PDF\n"
-  putStrLn "Exemple 1 : \"aaaabbcbbb\" from slide 15 RLE"
-  
-  -- -- First Exemple with method RLE
-  let originalInput = "aaaabbcbbb"
-  afficher "RLE" originalInput
-  afficher "Huffman" originalInput
-  afficher "ShannonFano" originalInput
-  afficher "LZ78" originalInput
-  afficher "LZW" originalInput
+ 
+  -- First Exemple with method RLE
+  putStrLn "=====================\nExemple 1 : \"aaaabbcbbb\" from slide 15 RLE" 
+  afficher "RLE" "aaaabbcbbb"
+  afficher "Huffman" "aaaabbcbbb"
+  afficher "ShannonFano" "aaaabbcbbb"
+  afficher "LZ78" "aaaabbcbbb"
+  afficher "LZW" "aaaabbcbbb"
+  -- Second Exemple with method Huffman & ShannonFano
+  putStrLn "=====================\nExemple 2 : \"abbca\" from slide 26 Huffman"
+  afficher "RLE" "abbca"
+  afficher "Huffman" "abbca"
+  afficher "ShannonFano" "abbca"
+  afficher "LZ78" "abbca"
+  afficher "LZW" "abbca"
+  -- Third Exemple with method LZ78 & LZW
+  putStrLn "=====================\nExemple 3 : \"belle echelle !\" from slide 31 LZ78"
+  afficher "RLE" "belle echelle !"
+  afficher "Huffman" "belle echelle !"
+  afficher "ShannonFano" "belle echelle !"
+  afficher "LZ78" "belle echelle !"
+  afficher "LZW" "belle echelle !"
+
+  putStrLn "\nOther exemples\n"
+  -- Fourth Exemple with a random binary string
+  let exemple4 = "1101010101101001001010101110110100101011010010111101001010110011101100101111001010101010110111101101011011100100101101010111110101101101110011010111011010101011001101011010100"
+  putStrLn $ "=====================\nExemple 4 : random binary string : \"" ++ exemple4 ++ "\""
+  afficher "RLE" exemple4
+  afficher "Huffman" exemple4
+  afficher "ShannonFano" exemple4
+  afficher "LZ78" exemple4
+  afficher "LZW" exemple4
+
+  -- Fifth Exemple with the first paragraph of "Haskell" from wikipedia
+  let exemple5 = "Haskell est un langage de programmation fonctionnel fondé sur le lambda-calcul et la logique combinatoire. Son nom vient du mathématicien et logicien Haskell Curry. Il a été créé en 1990 par un comité de chercheurs en théorie des langages intéressés par les langages fonctionnels et l'évaluation paresseuse. Le dernier standard est Haskell 2010 : c'est une version minimale et portable du langage conçue à des fins pédagogiques et pratiques, dans un souci d'interopérabilité entre les implémentations du langage et comme base de futures extensions. Le langage continue d'évoluer en 2020, principalement avec GHC, constituant ainsi un standard de facto comprenant de nombreuses extensions."
+  putStrLn $ "=====================\nExemple 5 : \"" ++ exemple5 ++ "\""
+  afficher "RLE" exemple5
+  afficher "Huffman" exemple5
+  afficher "ShannonFano" exemple5
+  afficher "LZ78" exemple5
+  afficher "LZW" exemple5
