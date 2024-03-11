@@ -7,7 +7,7 @@
 module LZ.LZW (compress, uncompress) where
 
 import Data.List (elemIndex)
--- import Debug.Trace (trace)
+import Debug.Trace (trace)
 -- | LZW compress method
 compress :: String -> [Int]
 compress "" = []
@@ -23,7 +23,7 @@ compress data' = compress' data' (map (:[]) ['\0'..'\255']) "" []
         Nothing -> let index = maybe 0 id (elemIndex currentCode dict)
                        compressed' = compressed ++ [index]
                        dict' = dict ++ [newCode]
-                   in compress' xs dict' [x] compressed'
+                   in trace ("Dictionary: " ++ show dict') $ compress' xs dict' [x] compressed'
 
 -- | LZW uncompress method
 -- If input cannot be uncompressed, returns `Nothing`
@@ -36,6 +36,10 @@ uncompress compressedData = uncompress' compressedData (map (:[]) ['\0'..'\255']
       if x >= 0 && x < length dict then
         let entry = dict !! x
             dict' = if null currentCode then dict else dict ++ [currentCode ++ [head entry]]
-        in (entry ++) <$> uncompress' xs dict' entry
+        in trace ("Dictionary: " ++ show dict') $ (entry ++) <$> uncompress' xs dict' entry
+      else if x == length dict then
+        let entry = currentCode ++ [head currentCode]
+            dict' = dict ++ [entry]
+        in trace ("Dictionary: " ++ show dict') $ (entry ++) <$> uncompress' xs dict' entry
       else
         Nothing
