@@ -3,7 +3,7 @@
   Description : A module containing specifics for the Shannon-Fano compression method
   Maintainer : Marwane Laghzaoui (laghzaoui@cy-tech.fr)
 -}
-module Statistic.ShannonFano (tree,compressShannon,uncompressShannon) where
+module Statistic.ShannonFano (tree,compress,uncompress) where
 
 import Statistic.EncodingTree (EncodingTree(..), encode, decode)
 import Statistic.Bit (Bit)
@@ -58,8 +58,8 @@ findSplitIndex :: Ord a => [a] -> Int
 findSplitIndex tab = snd (minimumBy (comparing fst) (zip tab [1..]))
 
 -- | Compress using Shannon-Fano encoding
-compressShannon :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
-compressShannon input =
+compress :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
+compress input =
   case tree input of
     Just encodingTree ->
       let compressedBits = concatMap (\x -> maybe [] id (encode encodingTree x)) input
@@ -67,6 +67,6 @@ compressShannon input =
     Nothing           -> (Nothing, [])
 
 -- | Decompress using Shannon-Fano encoding
-uncompressShannon ::  Maybe (EncodingTree a) -> [Bit] -> Maybe [a]
-uncompressShannon (Just encodedTree) encodedBits = decode encodedTree encodedBits
-uncompressShannon Nothing _ = Nothing
+uncompress ::  Maybe (EncodingTree a) -> [Bit] -> Maybe [a]
+uncompress (Just encodedTree) encodedBits = decode encodedTree encodedBits
+uncompress Nothing _ = Nothing

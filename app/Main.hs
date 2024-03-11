@@ -23,8 +23,8 @@ afficher methode input = do
       afficherResultats compressed decompressed
 
     "ShannonFano" -> do
-      let (tree, compressed) = compressShannon input
-          decompressed = uncompressShannon tree compressed
+      let (encodingTree, compressed) = ShannonFano.compress input
+          decompressed = ShannonFano.uncompress encodingTree compressed
       afficherResultats compressed decompressed
 
     "LZ78" -> do
