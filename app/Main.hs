@@ -56,45 +56,45 @@ main = do
     -- Demonstration Compression/Decompression Efficiencies for all methods
   putStrLn "\n\nDemonstration Compression/Decompression Efficiencies for all methods\n"
 
-  putStrLn "Exemples of the PDF\n"
- 
-  -- First Exemple with method RLE
-  putStrLn "=====================\nExemple 1 : \"aaaabbcbbb\" from slide 15 RLE" 
+  putStrLn "Examples of the PDF\n"
+
+  -- First Example with method RLE
+  putStrLn "=====================\nExample 1 : \"aaaabbcbbb\" from slide 15 RLE" 
   afficher "RLE" "aaaabbcbbb"
   afficher "Huffman" "aaaabbcbbb"
   afficher "ShannonFano" "aaaabbcbbb"
   afficher "LZ78" "aaaabbcbbb"
   afficher "LZW" "aaaabbcbbb"
-  -- Second Exemple with method Huffman & ShannonFano
-  putStrLn "=====================\nExemple 2 : \"abbca\" from slide 26 Huffman"
+  -- Second Example with method Huffman & ShannonFano
+  putStrLn "=====================\nExample 2 : \"abbca\" from slide 26 Huffman"
   afficher "RLE" "abbca"
   afficher "Huffman" "abbca"
   afficher "ShannonFano" "abbca"
   afficher "LZ78" "abbca"
   afficher "LZW" "abbca"
-  -- Third Exemple with method LZ78 & LZW
-  putStrLn "=====================\nExemple 3 : \"belle echelle !\" from slide 31 LZ78"
+  -- Third Example with method LZ78 & LZW
+  putStrLn "=====================\nExample 3 : \"belle echelle !\" from slide 31 LZ78"
   afficher "RLE" "belle echelle !"
   afficher "Huffman" "belle echelle !"
   afficher "ShannonFano" "belle echelle !"
   afficher "LZ78" "belle echelle !"
   afficher "LZW" "belle echelle !"
 
-  putStrLn "\nOther exemples\n"
-  -- Fourth Exemple with a random binary string
-  let exemple4 = "1101010101101001001010101110110100101011010010111101001010110011101100101111001010101010110111101101011011100100101101010111110101101101110011010111011010101011001101011010100"
-  putStrLn $ "=====================\nExemple 4 : random binary string : \"" ++ exemple4 ++ "\""
-  afficher "RLE" exemple4
-  afficher "Huffman" exemple4
-  afficher "ShannonFano" exemple4
-  afficher "LZ78" exemple4
-  afficher "LZW" exemple4
+  putStrLn "\nOther examples\n"
+  -- Fourth Example with a random binary string
+  let example4 = "1101010101101001001010101110110100101011010010111101001010110011101100101111001010101010110111101101011011100100101101010111110101101101110011010111011010101011001101011010100"
+  putStrLn $ "=====================\nExample 4 : random binary string : \"" ++ example4 ++ "\""
+  afficher "RLE" example4
+  afficher "Huffman" example4
+  afficher "ShannonFano" example4
+  afficher "LZ78" example4
+  afficher "LZW" example4
 
-  -- Fifth Exemple with the first paragraph of "Haskell" from wikipedia
-  let exemple5 = "Haskell est un langage de programmation fonctionnel fondé sur le lambda-calcul et la logique combinatoire. Son nom vient du mathématicien et logicien Haskell Curry. Il a été créé en 1990 par un comité de chercheurs en théorie des langages intéressés par les langages fonctionnels et l'évaluation paresseuse. Le dernier standard est Haskell 2010 : c'est une version minimale et portable du langage conçue à des fins pédagogiques et pratiques, dans un souci d'interopérabilité entre les implémentations du langage et comme base de futures extensions. Le langage continue d'évoluer en 2020, principalement avec GHC, constituant ainsi un standard de facto comprenant de nombreuses extensions."
-  putStrLn $ "=====================\nExemple 5 : \"" ++ exemple5 ++ "\""
-  afficher "RLE" exemple5
-  afficher "Huffman" exemple5
-  afficher "ShannonFano" exemple5
-  afficher "LZ78" exemple5
-  afficher "LZW" exemple5
+  -- Fifth Example with the first paragraph of "Haskell" from wikipedia
+  let example5 = "Haskell est un langage de programmation fonctionnel fondé sur le lambda-calcul et la logique combinatoire. Son nom vient du mathématicien et logicien Haskell Curry. Il a été créé en 1990 par un comité de chercheurs en théorie des langages intéressés par les langages fonctionnels et l'évaluation paresseuse. Le dernier standard est Haskell 2010 : c'est une version minimale et portable du langage conçue à des fins pédagogiques et pratiques, dans un souci d'interopérabilité entre les implémentations du langage et comme base de futures extensions. Le langage continue d'évoluer en 2020, principalement avec GHC, constituant ainsi un standard de facto comprenant de nombreuses extensions."
+  putStrLn $ "=====================\nExample 5 : \"" ++ example5 ++ "\""
+  afficher "RLE" example5
+  afficher "Huffman" example5
+  afficher "ShannonFano" example5
+  afficher "LZ78" example5
+  afficher "LZW" example5
