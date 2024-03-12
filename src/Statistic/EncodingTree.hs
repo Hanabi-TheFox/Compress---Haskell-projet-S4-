@@ -51,8 +51,8 @@ encode (EncodingNode _ left right) x =
 -- If computation is not possible, returns `Nothing`.
 decodeOnce :: EncodingTree a -> [Bit] -> Maybe (a, [Bit])
 decodeOnce (EncodingLeaf _ x) bits = Just (x, bits)
-decodeOnce (EncodingNode _ left right) (Zero:rest) = decodeOnce left rest
-decodeOnce (EncodingNode _ left right) (One:rest) = decodeOnce right rest
+decodeOnce (EncodingNode _ left _right) (Zero:rest) = decodeOnce left rest
+decodeOnce (EncodingNode _ _left right) (One:rest) = decodeOnce right rest
 decodeOnce _ _ = Nothing
 
 -- | Computes list of symbols from list of bits using encoding tree

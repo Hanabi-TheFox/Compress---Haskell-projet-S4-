@@ -12,6 +12,8 @@ import Data.List (foldl', sortOn)
 import Data.Map (toList)
 
 buildHuffmanTree :: [(a, Int)] -> EncodingTree a
+buildHuffmanTree [] = EncodingLeaf 0 undefined
+buildHuffmanTree [(x, _)] = EncodingLeaf 1 x
 buildHuffmanTree counts = foldl' buildLeaf (buildInitialTree counts) (sortOn snd counts)
   where
     buildInitialTree = foldl' (\acc (x, cnt) -> EncodingNode cnt (EncodingLeaf cnt x) acc) (EncodingLeaf 0 undefined)
