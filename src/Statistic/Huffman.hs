@@ -5,35 +5,41 @@
 -}
 module Statistic.Huffman (tree, compress, decompress) where
 
-import Statistic.EncodingTree ( EncodingTree(..), encode, decode )
-import Statistic.Bit ( Bit )
-import Statistic.Source (occurrences)
-import Data.List (foldl', sortOn)
+import Data.List (sortOn)
 import Data.Map (toList)
-
-buildHuffmanTree :: [(a, Int)] -> EncodingTree a
-buildHuffmanTree [] = EncodingLeaf 0 undefined
-buildHuffmanTree [(x, _)] = EncodingLeaf 1 x
-buildHuffmanTree counts = foldl' buildLeaf (buildInitialTree counts) (sortOn snd counts)
-  where
-    buildInitialTree = foldl' (\acc (x, cnt) -> EncodingNode cnt (EncodingLeaf cnt x) acc) (EncodingLeaf 0 undefined)
-    buildLeaf accTree (x, cnt) = EncodingNode cnt (EncodingLeaf cnt x) accTree
+import Statistic.EncodingTree (EncodingTree(..), encode, decode)
+import Statistic.Bit (Bit)
+import Statistic.Source (occurrences)
 
 -- | Huffman tree generation
 tree :: Ord a => [a] -> Maybe (EncodingTree a)
-tree input = do
-  let counts = orderedCounts input
-  if null counts then Nothing else Just (buildHuffmanTree counts)
+tree input = case orderedCounts input of
+               [] -> Nothing
+               [(x, _)] -> Just (EncodingLeaf 1 x)
+               _ -> Just $ buildHuffmanTree $ orderedCounts input
   where
     orderedCounts :: Ord a => [a] -> [(a, Int)]
     orderedCounts = sortOn snd . toList . occurrences
+
+    buildHuffmanTree :: [(a, Int)] -> EncodingTree a
+    buildHuffmanTree freqs = buildTree $ map (\(x, f) -> EncodingLeaf f x) freqs
+      where
+        buildTree [t] = t
+        buildTree ts = buildTree $ combineNodes ts
+        combineNodes (x:y:xs) = combine x y : combineNodes xs
+        combineNodes xs = xs
+        combine left right = EncodingNode (frequency left + frequency right) left right
+
+        frequency :: EncodingTree a -> Int
+        frequency (EncodingLeaf f _) = f
+        frequency (EncodingNode f _ _) = f
 
 -- | Compress using Huffman encoding
 compress :: Ord a => [a] -> (Maybe (EncodingTree a), [Bit])
 compress input =
   case tree input of
     Just encodingTree ->
-      let compressedBits = concatMap (\x -> maybe [] id (encode encodingTree x)) input
+      let compressedBits = concatMap (maybe [] id . encode encodingTree) input
       in (Just encodingTree, compressedBits)
     Nothing           -> (Nothing, [])
 
