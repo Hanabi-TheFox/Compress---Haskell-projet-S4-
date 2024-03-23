@@ -74,8 +74,8 @@ Pour construire et exécuter le projet, suivez ces étapes :
 
 - Oussama El-Fehri
 - Marwane Lagzaoui
-- Nicolas Mendy ([LinkedIn](https://www.linkedin.com/in/nicolas--dubois/) - [Mail](mendynicol@cy-tech.fr))
-- Ethan Pinto ([LinkedIn](https://www.linkedin.com/in/ethan-pinto-/) - [Mail](pintoethan@cy-tech.fr))
+- Nicolas Mendy ([LinkedIn](https://www.linkedin.com/in/nicolas--dubois/) - [Mail : mendynicol@cy-tech.fr](mailto:mendynicol@cy-tech.fr))
+- Ethan Pinto ([LinkedIn](https://www.linkedin.com/in/ethan-pinto-/) - [Mail : pintoethan@cy-tech.fr](mailto:pintoethan@cy-tech.fr))
 - Anthony Weiss
 
 ## Licence
